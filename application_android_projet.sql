@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost
--- Généré le :  Mar 01 Mars 2016 à 15:58
+-- Généré le :  Mar 01 Mars 2016 à 17:23
 -- Version du serveur :  5.6.28-0ubuntu0.15.10.1
 -- Version de PHP :  5.6.11-1ubuntu3.1
 
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `Information` (
   `longitude` float NOT NULL,
   `cle` int(11) NOT NULL,
   `valeur` varchar(32) NOT NULL,
-  `lien_url` varchar(128) NOT NULL
+  `xml` text
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
