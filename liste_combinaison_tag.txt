@@ -1,0 +1,104 @@
+<tag k="natural"/>
+name
+
+
+<tag k="shop"/>
+name
+addr:street
+addr:housenumber
+addr:city
+addr:postcode
+opening_hours
+website
+addr:country
+
+
+<tag k="sport"/>
+leisure
+name
+addr:street
+addr:housenumber
+addr:city
+addr:postcode
+
+
+
+<tag k="tourism"/>
+name
+information
+addr:street
+addr:city
+addr:housenumber
+addr:postcode
+addr:country
+website
+
+
+<tag k="historic"/> 
+name
+wikipedia
+image
+addr:city
+addr:street
+website
+addr:housenumber
+addr:postcode
+addr:country
+
+
+<tag k="waterway" v="dam"/>
+name
+
+
+<tag k="waterway" v="waterfall"/>
+name
+
+
+<tag k="amenity" v="fountain"/>
+name
+
+aucune combinaison possible pour planetarium, casino, clock, crypt
+
+commun à tout les autres "amenity"
+name
+addr:street
+addr:housenumber
+addr:city
+addr:postcode
+(et eventuellement website phone opening_hours)
+
+pour cafe restaurant fast_food:
+cuisine (correspond au type de nourriture (locale, burger,...)) 
+  
+pour place_of_worship:
+religion
+
+
+pour leisure :
+
+garden (name)
+golf_course (name website phone addr:city addr:postcode addr:street addr:housenumber)
+marina (name website)
+nature_reserve (name website)
+park (name)
+pitch (sport name)
+stadium (name sport addr:street addr:city addr:postcode) 
+swimming_pool (name)
+track (sport name)
+
+aucune combinaison pour wildlife_hide water_park swimming_area ice_rink fishing firepit dance bandstand adult_gaming_centre amusement_arcade
+
+
+
+pour building : 
+
+name
+source
+addr:housenumber
+addr:street
+addr:city
+addr:postcode
+addr:country
+building:levels (nombre d'etage du batiment je trouve cela sympa)
+height   (hauteur du batiment)
+
