@@ -1,6 +1,6 @@
 package Parser;
 
-public class Tag {
+public class Tag implements Comparable<Tag>{
 	public String k;
 	public String v;
 	
@@ -8,4 +8,13 @@ public class Tag {
 		this.k = k;
 		this.v = v;
 	}
+
+	@Override
+	public int compareTo(Tag t) {
+		if(this.k == t.k)
+			return 1;
+		return 0;
+	}
+	
+	
 }

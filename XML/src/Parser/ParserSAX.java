@@ -18,7 +18,8 @@ public class ParserSAX extends DefaultHandler{
 
 	@Override
 	public void endElement(String uri, String localName, String qName) throws SAXException {
-		// TODO Auto-generated method stub
+		if(qName == "node")
+			bdd.ajouteNode(nodeCourant);
 	}
 
 	@Override
