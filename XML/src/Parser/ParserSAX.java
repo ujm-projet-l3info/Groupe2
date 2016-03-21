@@ -30,7 +30,7 @@ public class ParserSAX extends DefaultHandler{
 	@Override
 	public void startElement(String uri, String loclName, String qName, Attributes attributes) throws SAXException {
 		if(qName == "node"){
-			nodeCourant = new Node(Integer.parseInt(attributes.getValue("id")), Double.parseDouble(attributes.getValue("lat")), Double.parseDouble(attributes.getValue("lon")));
+			nodeCourant = new Node(Long.parseLong(attributes.getValue("id")), Double.parseDouble(attributes.getValue("lat")), Double.parseDouble(attributes.getValue("lon")));
 		}
 		if(qName == "tag"){
 			nodeCourant.tags.add(new Tag(attributes.getValue("k"), attributes.getValue("v")));

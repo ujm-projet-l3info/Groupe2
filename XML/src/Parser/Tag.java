@@ -11,9 +11,16 @@ public class Tag implements Comparable<Tag>{
 
 	@Override
 	public int compareTo(Tag t) {
-		if(this.k == t.k)
+		if(this.equals(t))
 			return 1;
 		return 0;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if(obj != null && obj instanceof Tag)
+			return true;
+		return false;
 	}
 	
 	

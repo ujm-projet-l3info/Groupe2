@@ -6,8 +6,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
 
+/*
+ * DELETE FROM application_android_projet.tag WHERE 1;
+DELETE FROM application_android_projet.information WHERE 1;
+
+SELECT * FROM application_android_projet.information WHERE id NOT IN (SELECT id_info FROM application_android_projet.tag)
+ */
 
 public class DB {
 	private Connection c;
@@ -21,13 +26,13 @@ public class DB {
 			c = DriverManager.getConnection(url, usr, mdp);
 			System.out.println("Connection à la BD ok");
 			st = c.createStatement();
+			rs = null;
 			//#petite_liste
 			listeTag = new ArrayList<Tag>();
 			listeTag.add(new Tag("amenity",""));
 			listeTag.add(new Tag("building",""));
 			listeTag.add(new Tag("historic",""));
 			listeTag.add(new Tag("leisure",""));
-			listeTag.add(new Tag("nature",""));
 			listeTag.add(new Tag("shop",""));
 			listeTag.add(new Tag("sport",""));
 			listeTag.add(new Tag("tourism",""));
@@ -59,7 +64,8 @@ public class DB {
 	
 	public void close(){
 		try {
-			rs.close();
+			if(rs != null)
+				rs.close();
 			st.close();
 			c.close();
 		} catch (SQLException e) {
@@ -73,43 +79,43 @@ public class DB {
 		if(n.tags != null){
 			for(Tag t : n.tags){
 				//#petit_if
-				if(t.k == "natural" || t.k == "shop" || t.k == "sport" || t.k == "tourism" || t.k == "historic" || 
-						(t.k == "waterway" && t.v == "dam") || (t.k == "waterway" && t.v == "waterfall") ||
-						 (t.k == "amenity" && t.v == "bar") || (t.k == "amenity" && t.v == "cafe") ||
-						 (t.k == "amenity" && t.v == "restaurant") || (t.k == "amenity" && t.v == "fast_food") ||
-						 (t.k == "amenity" && t.v == "pub") || (t.k == "amenity" && t.v == "library") ||
-						 (t.k == "amenity" && t.v == "university") || (t.k == "amenity" && t.v == "arts_centre") ||
-						 (t.k == "amenity" && t.v == "fountain") || (t.k == "amenity" && t.v == "planetarium") ||
-						 (t.k == "amenity" && t.v == "casino") || (t.k == "amenity" && t.v == "cinema") ||
-						 (t.k == "amenity" && t.v == "theatre") || (t.k == "amenity" && t.v == "clock") ||
-						 (t.k == "amenity" && t.v == "crypt") || (t.k == "amenity" && t.v == "place_of_worship") ||
-						 (t.k == "amenity" && t.v == "townhall") || (t.k == "amenity" && t.v == "nightclub")||
-						 (t.k == "building" && t.v == "hotel") || (t.k == "building" && t.v == "retail")||
-						 (t.k == "building" && t.v == "cathedral") || (t.k == "building" && t.v == "chapel")||
-						 (t.k == "building" && t.v == "church") || (t.k == "building" && t.v == "mosque")||
-						 (t.k == "building" && t.v == "temple") || (t.k == "building" && t.v == "synagogue")||
-						 (t.k == "building" && t.v == "shrine") || (t.k == "building" && t.v == "civic")||
-						 (t.k == "building" && t.v == "stadium") || (t.k == "building" && t.v == "university")||
-						 (t.k == "building" && t.v == "public") || (t.k == "building" && t.v == "bridge")||
-						 (t.k == "building" && t.v == "ruins") ||
-						 (t.k == "leisure" && t.v == "adult_gaming_center") || (t.k == "leisure" && t.v == "amusement_arcade")||
-						 (t.k == "leisure" && t.v == "bandstand") || (t.k == "leisure" && t.v == "dance")||
-						 (t.k == "leisure" && t.v == "firepit") || (t.k == "leisure" && t.v == "fishing")||
-						 (t.k == "leisure" && t.v == "garden") || (t.k == "leisure" && t.v == "golf_course")||
-						 (t.k == "leisure" && t.v == "ice_rink") || (t.k == "leisure" && t.v == "marina")||
-						 (t.k == "leisure" && t.v == "nature_reserve") || (t.k == "leisure" && t.v == "park")||
-						 (t.k == "leisure" && t.v == "pitch") || (t.k == "leisure" && t.v == "stadium")||
-						 (t.k == "leisure" && t.v == "swimming_pool") || (t.k == "leisure" && t.v == "swimming_area")||
-						 (t.k == "leisure" && t.v == "track") || (t.k == "leisure" && t.v == "water_park")||
-						 (t.k == "leisure" && t.v == "wildlife_hide")
+				if( t.k.equals("shop") || t.k.equals( "sport")|| t.k.equals( "tourism")|| t.k.equals( "historic")|| 
+					      (t.k.equals( "waterway")&& t.v.equals( "dam")) || (t.k.equals( "waterway")&& t.v.equals( "waterfall")) ||
+					       (t.k.equals( "amenity")&& t.v.equals( "bar")) || (t.k.equals( "amenity")&& t.v.equals( "cafe")) ||
+					       (t.k.equals( "amenity")&& t.v.equals( "restaurant")) || (t.k.equals( "amenity")&& t.v.equals( "fast_food")) ||
+					       (t.k.equals( "amenity")&& t.v.equals( "pub")) || (t.k.equals( "amenity")&& t.v.equals( "library")) ||
+					       (t.k.equals( "amenity")&& t.v.equals( "university")) || (t.k.equals( "amenity")&& t.v.equals( "arts_centre")) ||
+					       (t.k.equals( "amenity")&& t.v.equals( "fountain")) || (t.k.equals( "amenity")&& t.v.equals( "planetarium")) ||
+					       (t.k.equals( "amenity")&& t.v.equals( "casino")) || (t.k.equals( "amenity")&& t.v.equals( "cinema")) ||
+					       (t.k.equals( "amenity")&& t.v.equals( "theatre")) || (t.k.equals( "amenity")&& t.v.equals( "clock")) ||
+					       (t.k.equals( "amenity")&& t.v.equals( "crypt")) || (t.k.equals( "amenity")&& t.v.equals( "place_of_worship")) ||
+					       (t.k.equals( "amenity")&& t.v.equals( "townhall")) || (t.k.equals( "amenity")&& t.v.equals( "nightclub"))||
+					       (t.k.equals( "building")&& t.v.equals( "hotel")) || (t.k.equals( "building")&& t.v.equals( "retail"))||
+					       (t.k.equals( "building")&& t.v.equals( "cathedral")) || (t.k.equals( "building")&& t.v.equals( "chapel"))||
+					       (t.k.equals( "building")&& t.v.equals( "church")) || (t.k.equals( "building")&& t.v.equals( "mosque"))||
+					       (t.k.equals( "building")&& t.v.equals( "temple")) || (t.k.equals( "building")&& t.v.equals( "synagogue"))||
+					       (t.k.equals( "building")&& t.v.equals( "shrine")) || (t.k.equals( "building")&& t.v.equals( "civic"))||
+					       (t.k.equals( "building")&& t.v.equals( "stadium")) || (t.k.equals( "building")&& t.v.equals( "university"))||
+					       (t.k.equals( "building")&& t.v.equals( "public")) || (t.k.equals( "building")&& t.v.equals( "bridge"))||
+					       (t.k.equals( "building")&& t.v.equals( "ruins")) ||
+					       (t.k.equals( "leisure")&& t.v.equals( "adult_gaming_center")) || (t.k.equals( "leisure")&& t.v.equals( "amusement_arcade"))||
+					       (t.k.equals( "leisure")&& t.v.equals( "bandstand")) || (t.k.equals( "leisure")&& t.v.equals( "dance"))||
+					       (t.k.equals( "leisure")&& t.v.equals( "firepit")) || (t.k.equals( "leisure")&& t.v.equals( "fishing"))||
+					       (t.k.equals( "leisure")&& t.v.equals( "garden")) || (t.k.equals( "leisure")&& t.v.equals( "golf_course"))||
+					       (t.k.equals( "leisure")&& t.v.equals( "ice_rink")) || (t.k.equals( "leisure")&& t.v.equals( "marina"))||
+					       (t.k.equals( "leisure")&& t.v.equals( "nature_reserve")) || (t.k.equals( "leisure")&& t.v.equals( "park"))||
+					       (t.k.equals( "leisure")&& t.v.equals( "pitch")) || (t.k.equals( "leisure")&& t.v.equals( "stadium"))||
+					       (t.k.equals( "leisure")&& t.v.equals( "swimming_pool")) || (t.k.equals( "leisure")&& t.v.equals( "swimming_area"))||
+					       (t.k.equals( "leisure")&& t.v.equals( "track")) || (t.k.equals( "leisure")&& t.v.equals( "water_park"))||
+					       (t.k.equals( "leisure")&& t.v.equals( "wildlife_hide"))
 						 ){
 					keep = true;
 				}
 			}
 			if(keep){
-				n.tags = (ArrayList<Tag>) intersection(n.tags, listeTag);
+				n.tags = intersection(n.tags, listeTag);
 				try {
-					st.executeUpdate("INSERT INTO information VALUES (" + n.id + ", " + n.lat + ", " + n.lon + ")");
+					st.executeUpdate("INSERT INTO application_android_projet.information VALUES (" + n.id + ", " + n.lat + ", " + n.lon + ")");
 					for(Tag t : n.tags){
 						ajouteTag(t, n);
 					}
@@ -121,10 +127,10 @@ public class DB {
 		}
 	}
 	
-    public <T> List<T> intersection(List<T> list1, List<T> list2) {
-        List<T> list = new ArrayList<T>();
+    public ArrayList<Tag> intersection(ArrayList<Tag> list1, ArrayList<Tag> list2) {
+    	ArrayList<Tag> list = new ArrayList<Tag>();
 
-        for (T t : list1) {
+        for (Tag t : list1) {
             if(list2.contains(t)) {
                 list.add(t);
             }
@@ -135,14 +141,23 @@ public class DB {
 	
 	private void ajouteTag(Tag t, Node n){
 		try {
-			rs = st.executeQuery("SELECT id_cle FROM cle WHERE libelle = " + t.k);
+			rs = st.executeQuery("SELECT id_cle FROM application_android_projet.cle WHERE libelle = '" + t.k + "'");
 			if(rs.next()){
-				st.executeQuery("INSERT INTO tag VALUES (" + rs.getString(0) + ", " + n.id + ", " + t.v + ")");
+				st.executeUpdate("INSERT INTO application_android_projet.tag VALUES (" + n.id + ", " + rs.getLong(1) + ", '" + addSlashes(t.v) + "')");
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public static String addSlashes(String s) {
+	    s = s.replaceAll("\\\\", "\\\\\\\\");
+	    s = s.replaceAll("\\n", "\\\\n");
+	    s = s.replaceAll("\\r", "\\\\r");
+	    s = s.replaceAll("\\00", "\\\\0");
+	    s = s.replaceAll("'", "\\\\'");
+	    return s;
 	}
 	
 }
