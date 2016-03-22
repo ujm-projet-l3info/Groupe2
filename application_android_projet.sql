@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Jeu 17 Mars 2016 à 16:56
+-- Généré le :  Mar 22 Mars 2016 à 16:18
 -- Version du serveur :  5.6.15-log
 -- Version de PHP :  5.5.8
 
@@ -70,7 +70,7 @@ INSERT INTO `cle` (`id_cle`, `libelle`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `information` (
-  `id` int(11) NOT NULL,
+  `id` bigint(20) NOT NULL,
   `latitude` float NOT NULL,
   `longitude` float NOT NULL,
   PRIMARY KEY (`id`)
@@ -83,7 +83,7 @@ CREATE TABLE IF NOT EXISTS `information` (
 --
 
 CREATE TABLE IF NOT EXISTS `tag` (
-  `id_info` int(11) NOT NULL,
+  `id_info` bigint(20) NOT NULL,
   `id_cle` int(11) NOT NULL,
   `valeur` varchar(100) NOT NULL,
   PRIMARY KEY (`id_info`,`id_cle`)
