@@ -74,6 +74,68 @@ public class DB {
 		}
 	}
 	
+	public void updateNode(Node n){
+		boolean keep = false;
+		if(n.tags != null){
+			for(Tag t : n.tags){
+				//#petit_if
+				if( t.k.equals("shop") || t.k.equals( "sport")|| t.k.equals( "tourism")|| t.k.equals( "historic")|| 
+					      (t.k.equals( "waterway")&& t.v.equals( "dam")) || (t.k.equals( "waterway")&& t.v.equals( "waterfall")) ||
+					       (t.k.equals( "amenity")&& t.v.equals( "bar")) || (t.k.equals( "amenity")&& t.v.equals( "cafe")) ||
+					       (t.k.equals( "amenity")&& t.v.equals( "restaurant")) || (t.k.equals( "amenity")&& t.v.equals( "fast_food")) ||
+					       (t.k.equals( "amenity")&& t.v.equals( "pub")) || (t.k.equals( "amenity")&& t.v.equals( "library")) ||
+					       (t.k.equals( "amenity")&& t.v.equals( "university")) || (t.k.equals( "amenity")&& t.v.equals( "arts_centre")) ||
+					       (t.k.equals( "amenity")&& t.v.equals( "fountain")) || (t.k.equals( "amenity")&& t.v.equals( "planetarium")) ||
+					       (t.k.equals( "amenity")&& t.v.equals( "casino")) || (t.k.equals( "amenity")&& t.v.equals( "cinema")) ||
+					       (t.k.equals( "amenity")&& t.v.equals( "theatre")) || (t.k.equals( "amenity")&& t.v.equals( "clock")) ||
+					       (t.k.equals( "amenity")&& t.v.equals( "crypt")) || (t.k.equals( "amenity")&& t.v.equals( "place_of_worship")) ||
+					       (t.k.equals( "amenity")&& t.v.equals( "townhall")) || (t.k.equals( "amenity")&& t.v.equals( "nightclub"))||
+					       (t.k.equals( "building")&& t.v.equals( "hotel")) || (t.k.equals( "building")&& t.v.equals( "retail"))||
+					       (t.k.equals( "building")&& t.v.equals( "cathedral")) || (t.k.equals( "building")&& t.v.equals( "chapel"))||
+					       (t.k.equals( "building")&& t.v.equals( "church")) || (t.k.equals( "building")&& t.v.equals( "mosque"))||
+					       (t.k.equals( "building")&& t.v.equals( "temple")) || (t.k.equals( "building")&& t.v.equals( "synagogue"))||
+					       (t.k.equals( "building")&& t.v.equals( "shrine")) || (t.k.equals( "building")&& t.v.equals( "civic"))||
+					       (t.k.equals( "building")&& t.v.equals( "stadium")) || (t.k.equals( "building")&& t.v.equals( "university"))||
+					       (t.k.equals( "building")&& t.v.equals( "public")) || (t.k.equals( "building")&& t.v.equals( "bridge"))||
+					       (t.k.equals( "building")&& t.v.equals( "ruins")) ||
+					       (t.k.equals( "leisure")&& t.v.equals( "adult_gaming_center")) || (t.k.equals( "leisure")&& t.v.equals( "amusement_arcade"))||
+					       (t.k.equals( "leisure")&& t.v.equals( "bandstand")) || (t.k.equals( "leisure")&& t.v.equals( "dance"))||
+					       (t.k.equals( "leisure")&& t.v.equals( "firepit")) || (t.k.equals( "leisure")&& t.v.equals( "fishing"))||
+					       (t.k.equals( "leisure")&& t.v.equals( "garden")) || (t.k.equals( "leisure")&& t.v.equals( "golf_course"))||
+					       (t.k.equals( "leisure")&& t.v.equals( "ice_rink")) || (t.k.equals( "leisure")&& t.v.equals( "marina"))||
+					       (t.k.equals( "leisure")&& t.v.equals( "nature_reserve")) || (t.k.equals( "leisure")&& t.v.equals( "park"))||
+					       (t.k.equals( "leisure")&& t.v.equals( "pitch")) || (t.k.equals( "leisure")&& t.v.equals( "stadium"))||
+					       (t.k.equals( "leisure")&& t.v.equals( "swimming_pool")) || (t.k.equals( "leisure")&& t.v.equals( "swimming_area"))||
+					       (t.k.equals( "leisure")&& t.v.equals( "track")) || (t.k.equals( "leisure")&& t.v.equals( "water_park"))||
+					       (t.k.equals( "leisure")&& t.v.equals( "wildlife_hide"))
+						 ){
+					keep = true;
+				}
+			}
+			if(keep){
+				n.tags = intersection(n.tags, listeTag);
+				try {
+					rs = st.executeQuery("SELECT * FROM application_android_projet.information WHERE id = '" + n.id + "'");
+					if(rs.next()){
+						st.executeUpdate("UPDATE information SET latitude = '" + n.lat + "', longitude = '"+ n.lon +"' WHERE id = '" + n.id + "'");
+						for(Tag t : n.tags){
+							updateTag(t, n);
+						}
+					}
+					else{
+						st.executeUpdate("INSERT INTO application_android_projet.information VALUES (" + n.id + ", " + n.lat + ", " + n.lon + ")");
+						for(Tag t : n.tags){
+							ajouteTag(t, n);
+						}
+					}
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
 	public void ajouteNode(Node n){
 		boolean keep = false;
 		if(n.tags != null){
@@ -144,6 +206,23 @@ public class DB {
 			rs = st.executeQuery("SELECT id_cle FROM application_android_projet.cle WHERE libelle = '" + t.k + "'");
 			if(rs.next()){
 				st.executeUpdate("INSERT INTO application_android_projet.tag VALUES (" + n.id + ", " + rs.getLong(1) + ", '" + addSlashes(t.v) + "')");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	private void updateTag(Tag t, Node n){
+		try {
+			rs = st.executeQuery("SELECT id_cle FROM application_android_projet.cle WHERE libelle = '" + t.k + "'");
+			if(rs.next()){
+				long id_cle = rs.getLong(1);
+				rs = st.executeQuery("SELECT * FROM application_android_projet.tag WHERE id_cle ='" + id_cle + "' AND id_info ='"+ n.id +"'");
+				if(rs.next())
+					st.executeUpdate("UPDATE application_android_projet.tag SET valeur = '"+ addSlashes(t.v) +"' WHERE id_cle = '"+ id_cle +"' AND id_info = '" + n.id + "'" );
+				else
+					st.executeUpdate("INSERT INTO application_android_projet.tag VALUES (" + n.id + ", " + rs.getLong(1) + ", '" + addSlashes(t.v) + "')");
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

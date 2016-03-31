@@ -9,7 +9,6 @@ public class Tag implements Comparable<Tag>{
 		this.v = v;
 	}
 
-	@Override
 	public int compareTo(Tag t) {
 		if(this.equals(t))
 			return 1;
