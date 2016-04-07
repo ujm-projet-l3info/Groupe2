@@ -5,6 +5,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 
+
 public class ParserSAX extends DefaultHandler{
 
 	DB bdd;
@@ -24,7 +25,8 @@ public class ParserSAX extends DefaultHandler{
 
 	@Override
 	public void startDocument() throws SAXException {
-		bdd = new DB("jdbc:mysql://127.0.0.1/application_android_projet", "root", "");
+		//bdd = new DB("jdbc:mysql://127.0.0.1/application_android_projet", "root", "");
+		bdd = new DB(ParserParam.bdd, ParserParam.id, ParserParam.mdp);
 	}
 
 	@Override
