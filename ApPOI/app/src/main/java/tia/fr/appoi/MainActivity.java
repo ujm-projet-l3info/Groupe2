@@ -1,166 +1,59 @@
 package tia.fr.appoi;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationManager;
-import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.util.Log;
-import android.view.View;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends Activity {
 
-    ListView lstView;   //Endroit où afficher les résultats
-    ArrayList<String> listResults;  //Liste contenant les résultats
+    public static double gpsLat, gpsLon;    //Positions du GPS
+    public static int distance; //Distance de recherche
+    public static String json;  //JSON echange avec le serveur
+    public static ArrayList<String> checkedTags;    //Liste des checkBoxes cochees
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        //------------Instanciation des valeurs par defaut pour la recherche------------
+        this.checkedTags = new ArrayList<String>();
+        this.checkedTags.add("tourism");
+        this.checkedTags.add("historic");
+        this.gpsLat = 45.432174;
+        this.gpsLon = 4.394739;
+        this.distance = 1500;
+        this.json = "{\"distance\":\""+this.distance+"\"," +
+            "\"latitude\":\""+this.gpsLat+"\"," +
+            "\"longitude\":\""+this.gpsLon+"\","+
+            "\"params\":["+
+            "{\"name\":\"historic\"},"+
+            "{\"name\":\"tourism\"}]}";
 
 
-        lstView = (ListView)findViewById(R.id.listView); //Recuperation de la listView id = lstView
-        listResults = new ArrayList<String>();
+        //------------Lancement de l'activite Map------------
 
+        Intent i = new Intent(MainActivity.this, Map.class);    //Intent definissant l'activite d'origine et l'activite de destination
+        Bundle b = new Bundle();    //Bundle contenant les variables passees a l'activite de destination
+        b.putInt("distance", distance); //Si vous avez besoin de commentaires pour ces 5 lignes
+        b.putDouble("gpsLat", gpsLat);  //Je peux plus rien pour vous
+        b.putDouble("gpsLon", gpsLon);
+        b.putString("json", json);
+        b.putStringArrayList("checkedTags", checkedTags);
+        i.putExtras(b); //Ajouter le Bundle a l'intent, pour l'envoyer vers l'activite de destination
 
+        startActivity(i);   //Lancement de l'activite Map (en gros, changement de page)
 
-        /*//------------ GPS --------------
-
-        LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-        Location location = null;
-        double gpsLon, gpsLat;
-        try {
-             location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-             gpsLon = location.getLongitude();
-             gpsLat = location.getLatitude();
-        } catch (SecurityException e) {
-            System.err.println("--------Espece de debile, tu devais accepter la localisation GPS. Go sur iOS sale plow");
-        }*/
-
-        String json = "{\"distance\":\"50\"," +
-                "\"latitude\":\"4.12354\"," +
-                "\"longitude\":\"49.13241\"," +
-                "\"params\":[" +
-                "{\"name\":\"shop\"}," +
-                "{\"name\":\"amenity\"}" +
-                "]}";
-        GetNodes gn1 = new GetNodes();
-        gn1.execute("http://10.0.2.2:80/android/getNodes.php?json=" + json);
-        Intent intentFillListView = new Intent(getApplicationContext(), GetNodes.class);
-        intentFillListView.putExtra("com.package.app.STRARRAY", listResults);
-        startActivity(intentFillListView);
-        gn1.fillList(listResults);
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
-                this,
-                android.R.layout.simple_list_item_1,
-                listResults );
-        lstView.setAdapter(arrayAdapter);
-    }
-
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
     }
 
 }

@@ -1,0 +1,15 @@
+Yo les mecs!
+
+Pour faire fonctionner l'application : 
+
+- Android Studio avec un émulateur
+
+- wamp, wapp, easyPhp...
+
+- La BDD remplie et opérationnelle (script dans la branche divers)
+
+- Le fichier php/getNodes.php >>> A mettre sur votre localhost dans un dossier Android (l'accès sera donc sur localhost/android/getNodes.php)
+
+- Verifiez dans Map.java l'url de connexion : J'ai mis 10.0.2.2:80/android/getNodes.php. En effet, l'émulateur android ne peut pas accéder au localhost de votre PC avec l'url localhost ou 127.0.0.1. Essayez-donc avec ce que j'ai mis, et si ça marche pas, débrouillez-vous. Le port 80 a l'air de marcher, alors laissez comme ça aussi.
+
+Et si vous avez des problèmes, vous m'envoyez un SMS

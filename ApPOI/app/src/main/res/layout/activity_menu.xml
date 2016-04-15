@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal">
+
+        <SeekBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/skbDistance"
+            android:max="5000"
+            android:progress="100"
+            android:indeterminate="false"
+            android:layout_below="@+id/txtSkbCurrent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignRight="@+id/txtSkbMax"
+            android:layout_alignEnd="@+id/txtSkbMax" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="100 m"
+            android:id="@+id/txtSkbMin"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/skbDistance"
+            android:layout_alignParentLeft="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="5000 m"
+            android:id="@+id/txtSkbMax"
+            android:layout_alignTop="@+id/txtSkbMin"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="1500 m"
+            android:id="@+id/txtSkbCurrent"
+            android:layout_marginTop="23dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rechercher"
+            android:id="@+id/btnRechercher"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/txtSkbMin"
+            android:layout_toStartOf="@+id/txtSkbCurrent"
+            android:layout_marginTop="33dp"
+            android:layout_above="@+id/btnRechercher"
+            android:layout_alignRight="@+id/txtSkbMax"
+            android:layout_alignEnd="@+id/txtSkbMax"
+            android:id="@+id/rtlCheckboxes">
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Amenity"
+                android:id="@+id/ckbAmenity"
+                android:checked="false"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Building"
+                android:id="@+id/ckbBuilding"
+                android:checked="false"
+                android:layout_below="@+id/ckbAmenity"
+                android:layout_alignParentLeft="true" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Historic"
+                android:id="@+id/ckbHistoric"
+                android:checked="false"
+                android:layout_below="@+id/ckbBuilding"
+                android:layout_alignParentLeft="true" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Leisure"
+                android:id="@+id/ckbLeisure"
+                android:checked="false"
+                android:layout_below="@+id/ckbHistoric"
+                android:layout_alignParentLeft="true" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nature"
+                android:id="@+id/ckbNature"
+                android:checked="false"
+                android:layout_below="@+id/ckbLeisure"
+                android:layout_alignParentLeft="true" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Shop"
+                android:id="@+id/ckbShop"
+                android:checked="false"
+                android:layout_below="@+id/ckbNature"
+                android:layout_alignParentLeft="true" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sport"
+                android:id="@+id/ckbSport"
+                android:checked="false"
+                android:layout_below="@+id/ckbShop"
+                android:layout_alignParentLeft="true" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tourism"
+                android:id="@+id/ckbTourism"
+                android:checked="false"
+                android:layout_below="@+id/ckbSport"
+                android:layout_alignParentLeft="true" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Waterway"
+                android:id="@+id/ckbWaterway"
+                android:checked="false"
+                android:layout_below="@+id/ckbTourism"
+                android:layout_alignParentLeft="true" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+</LinearLayout>
