@@ -74,5 +74,24 @@ public class Map extends Activity {
                 startActivity(i);
             }
         });
+
+
+        /*-----------Listener du click sur btnFermer----------*/
+        Button btnFermer = (Button) findViewById(R.id.btnFermer);
+        btnFermer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /*Intent intent = new Intent();
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.putExtra("Exit me", true);
+                startActivity(intent);
+                finish();*/
+                Intent intent = new Intent(Intent.ACTION_MAIN);
+                intent.addCategory(Intent.CATEGORY_HOME);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+        });
+
     }
 }
