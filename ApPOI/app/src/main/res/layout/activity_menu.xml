@@ -140,8 +140,8 @@
                 android:text="Tourism"
                 android:id="@+id/ckbTourism"
                 android:checked="false"
-                android:layout_below="@+id/ckbSport"
-                android:layout_alignParentLeft="true" />
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
 
             <CheckBox
                 android:layout_width="wrap_content"
@@ -150,7 +150,8 @@
                 android:id="@+id/ckbWaterway"
                 android:checked="false"
                 android:layout_below="@+id/ckbTourism"
-                android:layout_alignParentLeft="true" />
+                android:layout_alignLeft="@+id/ckbTourism"
+                android:layout_alignStart="@+id/ckbTourism" />
         </RelativeLayout>
 
     </RelativeLayout>

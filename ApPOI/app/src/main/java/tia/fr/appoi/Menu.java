@@ -47,10 +47,15 @@ public class Menu extends Activity implements SeekBar.OnSeekBarChangeListener {
 
         //------------Cocher les checkboxes en fonction des parametres presents dans la liste checkedTags------------
         CheckBox cb;
+        String cbName;
         for(int i = 0 ; i < rtlCheckboxes.getChildCount() ; i++) {  //Parcours les enfants du RelativeLayout, conteneur des checkboxes
             cb = (CheckBox)rtlCheckboxes.getChildAt(i);
-            if(checkedTags.contains(cb.getText())) {
+            cbName = (String)cb.getText();
+            if(checkedTags.contains(cbName.toLowerCase()) || checkedTags.contains(cbName) ) {
+                //System.out.println("YEP " + cb.getText());
                 cb.setChecked(true);
+            } else {
+                System.out.println("NOPE " + cb.getText());
             }
         }
 
@@ -69,6 +74,7 @@ public class Menu extends Activity implements SeekBar.OnSeekBarChangeListener {
                 for(int i = 0 ; i < rtlCheckboxes.getChildCount() ; i++) {
                     cb = (CheckBox)rtlCheckboxes.getChildAt(i);
                     if(cb.isChecked()) {
+                        //System.out.println("------CHECKED : " + (String)cb.getText());
                         checkedTags.add((String)cb.getText());  //Ajout du nom de la checkbox dans la liste
                     }
                 }
