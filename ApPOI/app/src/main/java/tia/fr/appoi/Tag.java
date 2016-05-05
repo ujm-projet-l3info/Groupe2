@@ -22,5 +22,7 @@ public class Tag implements Comparable<Tag>{
 		return false;
 	}
 	
-	
+	public String toString() {
+		return k + " : " + v + " ";
+	}
 }

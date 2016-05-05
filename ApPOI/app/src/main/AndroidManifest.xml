@@ -24,6 +24,11 @@
             android:name=".Menu"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Dialog"></activity>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDVaQYawdehtWw_0QSVQKDgoEWly9ae4zI" />
+
         <activity android:name=".Map"></activity>
     </application>
 

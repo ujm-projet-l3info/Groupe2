@@ -16,4 +16,12 @@ public class Node {
 		this.distance = distance;
 		this.tags = new ArrayList<Tag>();
 	}
+
+	public String toString() {
+		String s = "";
+		for(Tag t : tags) {
+			s += t.toString();
+		}
+		return s;
+	}
 }
