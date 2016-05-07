@@ -4,20 +4,26 @@ import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.location.Location;
 import android.location.LocationManager;
+import android.sax.TextElementListener;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 
@@ -78,6 +84,7 @@ public class Map extends Activity implements OnMapReadyCallback {
 
         //------------Listener du click sur btnMenu------------
         Button btnMenu = (Button) findViewById(R.id.btnMenu);
+
         btnMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,7 +101,7 @@ public class Map extends Activity implements OnMapReadyCallback {
         });
 
 
-        /*-----------Listener du click sur btnFermer----------*/
+        /*-----------Listener du click sur btnFermer----------
         Button btnFermer = (Button) findViewById(R.id.btnFermer);
         btnFermer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,7 +111,7 @@ public class Map extends Activity implements OnMapReadyCallback {
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
-        });
+        });*/
 
     }
 
@@ -121,11 +128,36 @@ public class Map extends Activity implements OnMapReadyCallback {
 
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, 13));
         for(Node n : gn1.nodes) {
-            map.addMarker(new MarkerOptions()
-                    .title(n.toString())
+            Marker m1 = map.addMarker(new MarkerOptions()
+                    .title(n.getTitre())
+                    .snippet(n.getInfos())
                     .position(new LatLng(n.lat, n.lon)));
+            /*map.addMarker(new MarkerOptions()
+                    .title(n.getTitre())
+                    .position(new LatLng(n.lat, n.lon))).showInfoWindow();*/
+            m1.showInfoWindow();
+
+            map.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+                @Override
+                public View getInfoWindow(Marker marker) {
+                    return null;
+                }
+
+                @Override
+                public View getInfoContents(Marker marker) {
+                    View v = getLayoutInflater().inflate(R.layout.info_window, null);
+                    TextView titre = (TextView)v.findViewById(R.id.txtInfoBulleTitre);
+                    TextView contenu = (TextView)v.findViewById(R.id.txtInfoBulleContenu);
+
+                    titre.setText(marker.getTitle());
+                    titre.setTypeface(null, Typeface.BOLD);
+                    titre.setTextColor(Color.rgb(0, 0, 0));
+                    contenu.setText(marker.getSnippet());
+                    return v;
+                }
+            });
+
         }
 
     }
-
 }
