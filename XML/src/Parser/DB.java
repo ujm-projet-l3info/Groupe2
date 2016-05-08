@@ -175,6 +175,7 @@ public class DB {
 				}
 			}
 			if(keep){
+				ParserParam.nbNodeCons++;
 				n.tags = intersection(n.tags, listeTag);
 				try {
 					st.executeUpdate("INSERT INTO application_android_projet.information VALUES (" + n.id + ", " + n.lat + ", " + n.lon + ")");
@@ -205,6 +206,7 @@ public class DB {
 		try {
 			rs = st.executeQuery("SELECT id_cle FROM application_android_projet.cle WHERE libelle = '" + t.k + "'");
 			if(rs.next()){
+				ParserParam.nbTagCons++;
 				st.executeUpdate("INSERT INTO application_android_projet.tag VALUES (" + n.id + ", " + rs.getLong(1) + ", '" + addSlashes(t.v) + "')");
 			}
 		} catch (SQLException e) {

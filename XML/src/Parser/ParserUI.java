@@ -31,10 +31,10 @@ public class ParserUI {
 		// frame.setPreferredSize(new Dimension(605,490));
 		frame.setResizable(false);
 
-		JLabel bdd = new JLabel("adresse BDD");
-		JLabel id = new JLabel("Identifiant");
-		JLabel mdp = new JLabel("mot de passe");
-		JLabel osm = new JLabel("fichier osm");
+		JLabel bdd = new JLabel("Adresse BDD :");
+		JLabel id = new JLabel("Identifiant :");
+		JLabel mdp = new JLabel("Mot de passe :");
+		JLabel osm = new JLabel("Fichier osm :");
 
 		final TextField tbdd = new TextField();
 		final TextField tid = new TextField();
@@ -68,7 +68,7 @@ public class ParserUI {
 
 		final TextField bosm = new TextField();
 		bosm.setEditable(false);
-		bosm.setPreferredSize(new Dimension(100, 30));
+		bosm.setPreferredSize(new Dimension(80, 25));
 		JButton jbosm = new JButton("Parcourir");
 
 		posm.add(bosm);
